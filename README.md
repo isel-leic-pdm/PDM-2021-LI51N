@@ -9,7 +9,7 @@ Aulas de Programação em Dispositivos Móveis da turma LI51N no semestre de inv
 * 5ªs feiras (21h40 .. 22h50) - Turno 2 : [Join Zoom](https://videoconf-colibri.zoom.us/j/88908211625)
 
 #### Aulas Remotas Gravadas
-* [Educast](https://educast.fccn.pt/) (canal ainda não disponível)
+* [Educast](https://educast.fccn.pt/vod/channels/1sucfv12ni) ([link alternativo](https://portal.educast.fccn.pt/videos?c=7316))
 
 #### Comunicação
 * [Slack](https://isel-leic-pdm.slack.com)
