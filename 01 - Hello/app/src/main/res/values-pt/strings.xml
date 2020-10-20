@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Olá</string>
+    <string name="message1">Oi ISEL!</string>
+    <string name="message2">Olá PDM!</string>
+    <string name="but_msg1">Mensagem 1!</string>
+    <string name="but_msg2">Mensagem 2!</string>
+</resources>

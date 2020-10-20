@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Hello</string>
+    <string name="message1">Hi ISEL!</string>
+    <string name="message2">Hello PDM!</string>
+    <string name="but_msg1">Message 1</string>
+    <string name="but_msg2">Message 2</string>
+</resources>
