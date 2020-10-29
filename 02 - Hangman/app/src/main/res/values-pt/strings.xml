@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jogo da Forca</string>
+    <string name="congrats">Parabéns! :-)</string>
+    <string name="hanged">ENFORCADO! :-(</string>
+</resources>

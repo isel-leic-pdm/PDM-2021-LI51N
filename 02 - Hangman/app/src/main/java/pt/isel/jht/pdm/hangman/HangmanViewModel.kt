@@ -1,9 +1,10 @@
 package pt.isel.jht.pdm.hangman
 
+import android.app.Application
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 
-class HangmanViewModel : ViewModel() {
+class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private var gameState = HangmanGame.startGame()
 
@@ -13,10 +14,13 @@ class HangmanViewModel : ViewModel() {
     val wrongLetters
         get() = gameState.wrong.joinToString("").padEnd(HangmanGame.maxWrong, '_')
 
+    val numErrors
+        get() = gameState.wrong.size
+
     val gameResultMessage
         get() = when (HangmanGame.gameResult(gameState)) {
-            HangmanGameResult.SUCCEEDED -> "Congratulations! :-)"
-            HangmanGameResult.FAILED -> "HANGED! :-("
+            HangmanGameResult.SUCCEEDED -> app.getString(R.string.congrats)
+            HangmanGameResult.FAILED -> app.getString(R.string.hanged)
             HangmanGameResult.ONGOING -> null
         }
 
