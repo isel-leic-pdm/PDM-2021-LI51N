@@ -15,8 +15,8 @@ class HangmanViewModel : ViewModel() {
 
     val gameResultMessage
         get() = when (HangmanGame.gameResult(gameState)) {
-            HangmanGameResult.FAILED -> "HANGED! :-("
             HangmanGameResult.SUCCEEDED -> "Congratulations! :-)"
+            HangmanGameResult.FAILED -> "HANGED! :-("
             HangmanGameResult.ONGOING -> null
         }
 
@@ -33,7 +33,7 @@ class HangmanViewModel : ViewModel() {
             gameState = HangmanGame.guess(guess, gameState)
         } catch (err: HangmanGuessException) {
             return when (err.type) {
-                HangmanGuessValidation.REPEATED -> "Letter already used"
+                HangmanGuessValidation.ALREADY_USED -> "Letter already used"
                 HangmanGuessValidation.NOT_A_LETTER -> "Invalid character"
             }
         }

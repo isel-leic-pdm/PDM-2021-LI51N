@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Hangman</string>
-    <string name="question_mark">\?</string>
+    <string name="question_mark" translatable="false">\?</string>
 </resources>

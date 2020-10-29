@@ -1,8 +1,6 @@
 package pt.isel.jht.pdm.hangman
 
-import java.io.SyncFailedException
 import java.util.Locale
-import kotlin.math.max
 
 object HangmanGame {
 
@@ -18,15 +16,15 @@ object HangmanGame {
         }
 
     fun guess(guess: Char, state: HangmanGameState) =
-        if (state.word.contains(validate(guess.toUpperCase(), state)))
+        if (state.word.contains(validated(guess.toUpperCase(), state)))
             HangmanGameState(state.word, state.right + guess, state.wrong)
         else
             HangmanGameState(state.word, state.right, state.wrong + guess)
 
-    private fun validate(guess: Char, state: HangmanGameState) =
+    private fun validated(guess: Char, state: HangmanGameState) =
         when (guess) {
             !in 'A'..'Z' -> throw HangmanGuessException(HangmanGuessValidation.NOT_A_LETTER)
-            in state.right, in state.wrong -> throw HangmanGuessException(HangmanGuessValidation.REPEATED)
+            in state.right, in state.wrong -> throw HangmanGuessException(HangmanGuessValidation.ALREADY_USED)
             else -> guess
         }
 }
@@ -34,7 +32,7 @@ object HangmanGame {
 class HangmanGuessException(val type: HangmanGuessValidation) : Exception()
 
 enum class HangmanGuessValidation {
-    REPEATED, NOT_A_LETTER
+    ALREADY_USED, NOT_A_LETTER
 }
 
 enum class HangmanGameResult {
