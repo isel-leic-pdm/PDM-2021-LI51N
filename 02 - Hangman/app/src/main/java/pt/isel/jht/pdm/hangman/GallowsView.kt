@@ -11,18 +11,16 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     private val filledBlack = ink(Color.BLACK, Paint.Style.FILL_AND_STROKE)
     private val borderBlack = ink(Color.BLACK, Paint.Style.STROKE)
-    private val drawFunctions by lazy {
-        arrayOf(
-            ::drawBorder,
-            ::drawGallows,
-            ::drawHead,
-            ::drawBody,
-            ::drawLeftArm,
-            ::drawRightArm,
-            ::drawLeftLeg,
-            ::drawRightLeg
-        )
-    }
+    private val drawFunctions = arrayOf(
+        ::drawBorder,
+        ::drawGallows,
+        ::drawHead,
+        ::drawBody,
+        ::drawLeftArm,
+        ::drawRightArm,
+        ::drawLeftLeg,
+        ::drawRightLeg
+    )
 
     var steps = 0
         set(st: Int) {
