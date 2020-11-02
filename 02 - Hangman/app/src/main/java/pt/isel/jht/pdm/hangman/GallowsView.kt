@@ -11,16 +11,6 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     private val filledBlack = ink(Color.BLACK, Paint.Style.FILL_AND_STROKE)
     private val borderBlack = ink(Color.BLACK, Paint.Style.STROKE)
-    private val drawFunctions = arrayOf(
-        ::drawBorder,
-        ::drawGallows,
-        ::drawHead,
-        ::drawBody,
-        ::drawLeftArm,
-        ::drawRightArm,
-        ::drawLeftLeg,
-        ::drawRightLeg
-    )
 
     var steps = 0
         set(st: Int) {
@@ -31,18 +21,19 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        (0..steps).forEach { idx -> drawFunctions[idx](canvas) }
+        (0..steps).forEach { idx -> drawSteps[idx](canvas) }
     }
 
-    private fun Int.percent(pc: Int) = this.toFloat() / 100 * pc
-
-    private fun ink(color: Int, style: Paint.Style): Paint {
-        val paint = Paint()
-        paint.color = color
-        paint.style = style
-        paint.strokeWidth = 5.0F
-        return paint
-    }
+    private val drawSteps = arrayOf(
+        ::drawBorder,
+        ::drawGallows,
+        ::drawHead,
+        ::drawBody,
+        ::drawLeftArm,
+        ::drawRightArm,
+        ::drawLeftLeg,
+        ::drawRightLeg
+    )
 
     private fun drawBorder(canvas: Canvas) =
         canvas.drawRect(0.0F, 0.0F, width.toFloat() - 1, height.toFloat() - 1, borderBlack)
@@ -71,4 +62,13 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     private fun drawRightLeg(canvas: Canvas) =
         canvas.drawLine(width.percent(45), height.percent(58), width.percent(52), height.percent(72), filledBlack)
+    private fun Int.percent(pc: Int) = this.toFloat() / 100 * pc
+
+    private fun ink(color: Int, style: Paint.Style): Paint {
+        val paint = Paint()
+        paint.color = color
+        paint.style = style
+        paint.strokeWidth = 5.0F
+        return paint
+    }
 }
