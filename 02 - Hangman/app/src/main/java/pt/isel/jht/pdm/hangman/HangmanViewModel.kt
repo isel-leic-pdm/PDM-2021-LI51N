@@ -8,6 +8,8 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private var gameState = HangmanGame.startGame()
 
+    var line: Line? = null
+
     val visibleWord
         get() = gameState.word.map { c -> if (gameState.right.contains(c)) c else '_' }.joinToString("")
 
@@ -47,21 +49,29 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
     private val KEY_WORD  = "KEY_WORD"
     private val KEY_RIGHT = "KEY_RIGHT"
     private val KEY_WRONG = "KEY_WRONG"
+    private val KEY_LINE  = "KEY_LINE"
 
     fun saveState(outState: Bundle) {
         outState.putString(KEY_WORD, gameState.word)
         outState.putCharArray(KEY_RIGHT, gameState.right.toCharArray())
         outState.putCharArray(KEY_WRONG, gameState.wrong.toCharArray())
+        line?.let { ln ->
+            outState.putFloatArray(KEY_LINE,
+                floatArrayOf(ln.begin.x, ln.begin.y, ln.end.x, ln.end.y)
+            )
+        }
     }
 
     fun loadState(savedState: Bundle) {
-        val word = savedState.getString(KEY_WORD)
-        if (word != null) {
+        savedState.getString(KEY_WORD)?.let { word ->
             gameState = HangmanGameState(
                 word,
                 savedState.getCharArray(KEY_RIGHT)?.toSet() ?: setOf(),
                 savedState.getCharArray(KEY_WRONG)?.toSet() ?: setOf()
             )
+        }
+        savedState.getFloatArray(KEY_LINE)?.let { coords ->
+            line = Line(Point(coords[0], coords[1]), Point(coords[2], coords[3]))
         }
     }
 }

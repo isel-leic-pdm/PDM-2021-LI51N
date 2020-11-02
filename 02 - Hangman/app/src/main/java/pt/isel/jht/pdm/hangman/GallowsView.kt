@@ -18,10 +18,26 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             invalidate()
         }
 
+    var line: Line? = null
+        set(ln: Line?) {
+            field = ln
+            invalidate()
+        }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         (0..steps).forEach { idx -> drawSteps[idx](canvas) }
+
+        line?.let { ln ->
+            canvas.drawLine(
+                ln.begin.x * width,
+                ln.begin.y * height,
+                ln.end.x * width,
+                ln.end.y * height,
+                filledBlack
+            )
+        }
     }
 
     private val drawSteps = arrayOf(
@@ -62,6 +78,7 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     private fun drawRightLeg(canvas: Canvas) =
         canvas.drawLine(width.percent(45), height.percent(58), width.percent(52), height.percent(72), filledBlack)
+
     private fun Int.percent(pc: Int) = this.toFloat() / 100 * pc
 
     private fun ink(color: Int, style: Paint.Style): Paint {
@@ -72,3 +89,7 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return paint
     }
 }
+
+data class Point(val x: Float, val y: Float)
+
+data class Line(val begin: Point, val end: Point)

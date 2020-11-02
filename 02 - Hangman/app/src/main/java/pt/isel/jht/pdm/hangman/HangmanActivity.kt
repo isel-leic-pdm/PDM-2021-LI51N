@@ -36,22 +36,42 @@ class HangmanActivity : AppCompatActivity() {
 
         butGuess.setOnClickListener { onGuess() }
 
+        var origin : Point? = null
         cvwGallows.setOnTouchListener { _, event ->
             val x = event.x
             val y = event.y
             when (event.action) {
-                MotionEvent.ACTION_DOWN -> { toast("DOWN ($x, $y)") }
-                MotionEvent.ACTION_MOVE -> { /* toast("MOVE ($x, $y)") */ }
-                MotionEvent.ACTION_UP   -> { toast("UP ($x, $y)") }
+                MotionEvent.ACTION_DOWN -> { toast("DOWN ($x, $y)"); origin = Point(x, y) }
+                MotionEvent.ACTION_MOVE -> { /* toast("MOVE ($x, $y)") */ origin?.let { orig -> drawLine(Line(orig, Point(x, y)))}}
+                MotionEvent.ACTION_UP   -> { toast("UP ($x, $y)");   origin?.let { orig -> saveLine(Line(orig, Point(x, y))) } }
             }
             true
         }
+    }
+
+    private fun saveLine(line: Line) {
+        drawLine(line)
+        viewModel.line = cvwGallows.line
+    }
+
+    private fun drawLine(line: Line) {
+        cvwGallows.line = Line(
+            Point(
+                line.begin.x/cvwGallows.width,
+                line.begin.y/cvwGallows.height
+            ),
+            Point(
+                line.end.x/cvwGallows.width,
+                line.end.y/cvwGallows.height
+            )
+        )
     }
 
     private fun updateViews() {
         txtWord.text = viewModel.visibleWord.spaced()
         txtWrong.text = viewModel.wrongLetters.spaced()
         cvwGallows.steps = viewModel.numErrors
+        cvwGallows.line = viewModel.line
 
         val gameResultMessage = viewModel.gameResultMessage
         if (gameResultMessage != null) {
