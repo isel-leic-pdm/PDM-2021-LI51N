@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.activity_main.*
 
 class HangmanActivity : AppCompatActivity() {
 
@@ -41,9 +40,9 @@ class HangmanActivity : AppCompatActivity() {
             val x = event.x
             val y = event.y
             when (event.action) {
-                MotionEvent.ACTION_DOWN -> toast("DOWN ($x, $y)")
-                MotionEvent.ACTION_MOVE -> toast("MOVE ($x, $y)")
-                MotionEvent.ACTION_UP -> toast("UP ($x, $y)")
+                MotionEvent.ACTION_DOWN -> { toast("DOWN ($x, $y)") }
+                MotionEvent.ACTION_MOVE -> { /* toast("MOVE ($x, $y)") */ }
+                MotionEvent.ACTION_UP   -> { toast("UP ($x, $y)") }
             }
             true
         }
