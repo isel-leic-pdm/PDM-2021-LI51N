@@ -3,4 +3,8 @@
     <string name="question_mark" translatable="false">\?</string>
     <string name="congrats">Congratulations! :-)</string>
     <string name="hanged">HANGED! :-(</string>
+    <string name="missing_letter">Missing letter</string>
+    <string name="too_many_chars">Too many characters</string>
+    <string name="letter_already_used">Letter already used</string>
+    <string name="invalid_character">Invalid character</string>
 </resources>

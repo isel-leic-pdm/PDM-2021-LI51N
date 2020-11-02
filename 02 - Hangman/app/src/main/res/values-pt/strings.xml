@@ -3,4 +3,8 @@
     <string name="app_name">Jogo da Forca</string>
     <string name="congrats">Parabéns! :-)</string>
     <string name="hanged">ENFORCADO! :-(</string>
+    <string name="missing_letter">Falta a letra</string>
+    <string name="too_many_chars">Demasiados caracteres</string>
+    <string name="letter_already_used">Letra já utilizada</string>
+    <string name="invalid_character">Carácter inválido</string>
 </resources>

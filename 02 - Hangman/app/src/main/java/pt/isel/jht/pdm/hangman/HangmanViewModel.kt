@@ -26,9 +26,9 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun guessWith(guess: String): String? {
         return when (guess.length) {
-            0 -> "Missing letter"
+            0 -> app.getString(R.string.missing_letter)
             1 -> guessWith(guess[0])
-            else -> "Too many characters"
+            else -> app.getString(R.string.too_many_chars)
         }
     }
 
@@ -37,8 +37,8 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
             gameState = HangmanGame.guess(guess, gameState)
         } catch (err: HangmanGuessException) {
             return when (err.type) {
-                HangmanGuessValidation.ALREADY_USED -> "Letter already used"
-                HangmanGuessValidation.NOT_A_LETTER -> "Invalid character"
+                HangmanGuessValidation.ALREADY_USED -> app.getString(R.string.letter_already_used)
+                HangmanGuessValidation.NOT_A_LETTER -> app.getString(R.string.invalid_character)
             }
         }
         return null
