@@ -7,4 +7,5 @@
     <string name="too_many_chars">Demasiados caracteres</string>
     <string name="letter_already_used">Letra já utilizada</string>
     <string name="invalid_character">Carácter inválido</string>
+    <string name="new_game">Novo Jogo</string>
 </resources>

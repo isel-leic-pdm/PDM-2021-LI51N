@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 class HangmanActivity : AppCompatActivity() {
@@ -25,7 +26,7 @@ class HangmanActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_hangman)
 
         if (savedInstanceState != null) {
             Log.d("Hangman::loadState", "Loading state for ${hashCode()}")
@@ -35,6 +36,10 @@ class HangmanActivity : AppCompatActivity() {
         updateViews()
 
         butGuess.setOnClickListener { onGuess() }
+
+        viewModel.history.observe(this, Observer { items ->
+            Toast.makeText(this, "History items: ${items.size}", Toast.LENGTH_LONG).show()
+        })
 
         var origin : Point? = null
         cvwGallows.setOnTouchListener { _, event ->
@@ -73,11 +78,11 @@ class HangmanActivity : AppCompatActivity() {
         cvwGallows.steps = viewModel.numErrors
         cvwGallows.line = viewModel.line
 
-        val gameResultMessage = viewModel.gameResultMessage
-        if (gameResultMessage != null) {
+        viewModel.gameResultMessage?.let { gameResultMessage ->
             txtResult.text = gameResultMessage
             edtLetter.isEnabled = false
             butGuess.isEnabled = false
+            viewModel.saveGame()
         }
     }
 

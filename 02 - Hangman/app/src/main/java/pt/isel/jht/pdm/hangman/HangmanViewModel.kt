@@ -6,7 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 
 class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
 
+    private val repository = app.repository
+
     private var gameState = HangmanGame.startGame()
+
+    private var saved = false
 
     var line: Line? = null
 
@@ -25,6 +29,9 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
             HangmanGameResult.FAILED -> app.getString(R.string.hanged)
             HangmanGameResult.ONGOING -> null
         }
+
+    val history
+        get() = repository.allHistoryItems
 
     fun guessWith(guess: String): String? {
         return when (guess.length) {
@@ -46,12 +53,27 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
         return null
     }
 
+    fun saveGame() {
+        if (!saved && HangmanGame.gameResult(gameState) != HangmanGameResult.ONGOING) {
+            repository.insertHistoryItem(
+                HangmanHistoryItem(
+                    gameState.word,
+                    gameState.right.joinToString(""),
+                    gameState.wrong.joinToString("")
+                )
+            )
+            saved = true
+        }
+    }
+
+    private val KEY_SAVED = "KEY_SAVED"
     private val KEY_WORD  = "KEY_WORD"
     private val KEY_RIGHT = "KEY_RIGHT"
     private val KEY_WRONG = "KEY_WRONG"
     private val KEY_LINE  = "KEY_LINE"
 
     fun saveState(outState: Bundle) {
+        outState.putBoolean(KEY_SAVED, saved)
         outState.putString(KEY_WORD, gameState.word)
         outState.putCharArray(KEY_RIGHT, gameState.right.toCharArray())
         outState.putCharArray(KEY_WRONG, gameState.wrong.toCharArray())
@@ -69,6 +91,7 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
                 savedState.getCharArray(KEY_RIGHT)?.toSet() ?: setOf(),
                 savedState.getCharArray(KEY_WRONG)?.toSet() ?: setOf()
             )
+            saved = savedState.getBoolean(KEY_SAVED)
         }
         savedState.getFloatArray(KEY_LINE)?.let { coords ->
             line = Line(Point(coords[0], coords[1]), Point(coords[2], coords[3]))
