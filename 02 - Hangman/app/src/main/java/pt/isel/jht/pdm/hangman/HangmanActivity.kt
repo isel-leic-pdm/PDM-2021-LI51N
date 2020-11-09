@@ -39,6 +39,7 @@ class HangmanActivity : AppCompatActivity() {
 
         viewModel.history.observe(this, Observer { items ->
             Toast.makeText(this, "History items: ${items.size}", Toast.LENGTH_LONG).show()
+            items.forEach { item -> Log.d("Hangman::history", "${item.id} : ${item}") }
         })
 
         var origin : Point? = null

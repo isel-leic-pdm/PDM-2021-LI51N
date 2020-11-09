@@ -3,6 +3,7 @@ package pt.isel.jht.pdm.hangman
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
+import java.util.Date
 
 class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -59,7 +60,8 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
                 HangmanHistoryItem(
                     gameState.word,
                     gameState.right.joinToString(""),
-                    gameState.wrong.joinToString("")
+                    gameState.wrong.joinToString(""),
+                    Date()
                 )
             )
             saved = true
