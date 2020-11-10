@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class HangmanHistoryAdapter internal constructor(private val context: Context) :
     RecyclerView.Adapter<HangmanHistoryAdapter.ItemViewHolder>() {
 
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
     private val inflater = LayoutInflater.from(context)
     private var items = emptyList<HangmanHistoryItem>()
 
@@ -26,7 +29,7 @@ class HangmanHistoryAdapter internal constructor(private val context: Context) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = items[position]
         holder.wordView.text = item.word
-        holder.dateView.text = item.date.toString()
+        holder.dateView.text = dateFormatter.format(item.date)
     }
 
     override fun getItemCount() = items.size

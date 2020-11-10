@@ -2,18 +2,44 @@ package pt.isel.jht.pdm.hangman
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
 import java.util.Date
 
-class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
+class HangmanViewModel(private val app: Application, private val state : SavedStateHandle) : AndroidViewModel(app) {
+
+    private val GAME_STATE_KEY = "GAME_STATE_KEY"
+    private val GAME_SAVED_KEY = "GAME_SAVED_KEY"
+    private val EXTRA_LINE_KEY = "EXTRA_LINE_KEY"
+
+    init {
+        if (state.contains(GAME_STATE_KEY)) {
+            Log.d("Hangman::ViewModel", "Restoring saved state")
+        } else {
+            Log.d("Hangman::ViewModel", "Creating a new view model")
+        }
+    }
 
     private val repository = app.repository
 
-    private var gameState = HangmanGame.startGame()
+    private var gameState = state.get<HangmanGameState>(GAME_STATE_KEY) ?: HangmanGame.startGame()
+        set(gs) {
+            field = gs
+            state[GAME_STATE_KEY] = gs
+        }
 
-    private var saved = false
+    private var saved = state.get<Boolean>(GAME_SAVED_KEY) ?: false
+        set(sv) {
+            field = sv
+            state[GAME_SAVED_KEY] = sv
+        }
 
-    var line: Line? = null
+    var line = state.get<Line>(EXTRA_LINE_KEY)
+        set(ln) {
+            field = ln
+            state[EXTRA_LINE_KEY] = ln
+        }
 
     val visibleWord
         get() = gameState.word.map { c -> if (gameState.right.contains(c)) c else '_' }.joinToString("")
@@ -65,38 +91,6 @@ class HangmanViewModel(private val app: Application) : AndroidViewModel(app) {
                 )
             )
             saved = true
-        }
-    }
-
-    private val KEY_SAVED = "KEY_SAVED"
-    private val KEY_WORD  = "KEY_WORD"
-    private val KEY_RIGHT = "KEY_RIGHT"
-    private val KEY_WRONG = "KEY_WRONG"
-    private val KEY_LINE  = "KEY_LINE"
-
-    fun saveState(outState: Bundle) {
-        outState.putBoolean(KEY_SAVED, saved)
-        outState.putString(KEY_WORD, gameState.word)
-        outState.putCharArray(KEY_RIGHT, gameState.right.toCharArray())
-        outState.putCharArray(KEY_WRONG, gameState.wrong.toCharArray())
-        line?.let { ln ->
-            outState.putFloatArray(KEY_LINE,
-                floatArrayOf(ln.begin.x, ln.begin.y, ln.end.x, ln.end.y)
-            )
-        }
-    }
-
-    fun loadState(savedState: Bundle) {
-        savedState.getString(KEY_WORD)?.let { word ->
-            gameState = HangmanGameState(
-                word,
-                savedState.getCharArray(KEY_RIGHT)?.toSet() ?: setOf(),
-                savedState.getCharArray(KEY_WRONG)?.toSet() ?: setOf()
-            )
-            saved = savedState.getBoolean(KEY_SAVED)
-        }
-        savedState.getFloatArray(KEY_LINE)?.let { coords ->
-            line = Line(Point(coords[0], coords[1]), Point(coords[2], coords[3]))
         }
     }
 }

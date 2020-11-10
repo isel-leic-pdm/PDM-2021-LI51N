@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
+import kotlinx.android.parcel.Parcelize
 
 class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -90,6 +92,8 @@ class GallowsView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 }
 
-data class Point(val x: Float, val y: Float)
+@Parcelize
+data class Point(val x: Float, val y: Float) : Parcelable
 
-data class Line(val begin: Point, val end: Point)
+@Parcelize
+data class Line(val begin: Point, val end: Point) : Parcelable
