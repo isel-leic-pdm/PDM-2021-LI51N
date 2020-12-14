@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "541975071516",
+    "project_id": "placard2020-6e9b4",
+    "storage_bucket": "placard2020-6e9b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541975071516:android:f068b12f2af988a7f388d9",
+        "android_client_info": {
+          "package_name": "pt.isel.jht.pdm.placard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541975071516-jcfpm0am4e98ignjicn8anfglj6tjov8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZnJSZmDQTJ_tqCgai4MmTi_olehVN2fc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541975071516-jcfpm0am4e98ignjicn8anfglj6tjov8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
